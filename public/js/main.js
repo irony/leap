@@ -60,17 +60,16 @@
           hands.push(handModel);
         }
 
-        handModel.rotation.x = hand.direction[0];
-        handModel.rotation.y = hand.direction[1];
-        handModel.rotation.z = hand.direction[2];
-        handModel.position.x = hand.palmPosition[0] / 200;
-        handModel.position.y = hand.palmPosition[1] / 200;
-        handModel.position.z = hand.palmPosition[2] / 200;
+        handModel.rotation.x = (handModel.rotation.x + hand.direction[0]) / 2;
+        handModel.rotation.y = (handModel.rotation.y + hand.direction[1]) / 2;
+        handModel.rotation.z = (handModel.rotation.z + hand.direction[2]) / 2;
+        handModel.position.x = (handModel.position.x + hand.palmPosition[0] / 100) / 2;
+        handModel.position.y = (handModel.position.y + hand.palmPosition[1] / 100) / 2;
+        handModel.position.z = (handModel.position.z + hand.palmPosition[2] / 100) / 2;
       });
     
-      hands = hands.splice(0, obj.hands.length);
-      
     };
+
     
     // On socket close
     ws.onclose = function(event) {
