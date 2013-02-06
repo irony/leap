@@ -32,7 +32,7 @@ Stage.prototype = {
     // remove cube
     if (msg.hands.length < this.cubes.length) {
       var cube = this.cubes.pop();
-      //this.scene.remove(cube.model);
+      this.scene.remove(cube.model);
     }
 
     // update the cubes positions.
@@ -72,14 +72,15 @@ Stage.prototype = {
 // ===========
 //
 var Cube = function() {
+  var m = THREE.MeshBasicMaterial;
   var geometry = new THREE.CubeGeometry(1,1,1);
   var material = new THREE.MeshFaceMaterial([
-      getColorMaterial(0xff0000),
-      getColorMaterial(0x00ff00),
-      getColorMaterial(0x0000ff),
-      getColorMaterial(0xffff00),
-      getColorMaterial(0xff00ff),
-      getColorMaterial(0x00ffff)
+      new m({ color: 0xff0000}),
+      new m({ color: 0x00ff00}),
+      new m({ color: 0x0000ff}),
+      new m({ color: 0xffff00}),
+      new m({ color: 0xff00ff}),
+      new m({ color: 0x00ffff})
   ]);
   this.model = new THREE.Mesh(geometry, material);
 };
