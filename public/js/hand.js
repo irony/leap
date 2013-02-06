@@ -7,7 +7,7 @@
 
   window.App = window.App || {};
 
-  App.getCube = function(size) {
+  App.getHand = function(size) {
     size = size || 1;
     var geometry = new THREE.CubeGeometry(size,size,size);
     var material = new THREE.MeshFaceMaterial([
