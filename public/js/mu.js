@@ -10,7 +10,7 @@ var Stage = function(options) {
 
   var socket = typeof(MozWebSocket) !== 'undefined' ? MozWebSocket : WebSocket;
   this.ws = new socket(options.ws);
-  ws.onmessage = this.socketMessage;
+  this.ws.onmessage = this.socketMessage;
   this.render();
 };
 
@@ -36,13 +36,13 @@ Stage.prototype = {
 
     // update the cubes positions.
     this.handleCubes(msg);
-  }
+  },
 
   // enumerates all the cubes
   // and update their position
   handleCubes: function(msg) {
     var i, cube, hand;
-    for(i = 0; i < msg.hands.length) {
+    for(i = 0; i < msg.hands.length; i++) {
       cube = this.cubes[i];
       hand = msg.hands[i];
       cube.model.position = {
