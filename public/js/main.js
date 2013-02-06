@@ -55,7 +55,7 @@
 
         var handModel = hands.length < count ? null : hands[count];
         if (!handModel){
-          handModel = new THREE.Mesh(geometry, material);
+          handModel = App.getHand();
           scene.add(handModel);
           hands.push(handModel);
         }
@@ -67,7 +67,6 @@
         handModel.position.y = (handModel.position.y + hand.palmPosition[1] / 100) / 2;
         handModel.position.z = (handModel.position.z + hand.palmPosition[2] / 100) / 2;
       });
-    
     };
 
     
