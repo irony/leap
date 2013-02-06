@@ -8,13 +8,13 @@
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  var geometry = new THREE.CubeGeometry(1, 1 ,1);
-  var material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  var handModel = new THREE.Mesh(geometry, material);
+  var handModel = App.getHand();
 
   var hands = [];
 
   camera.position.z = 5;
+
+  scene.add(handModel);
 
   function render() {
     requestAnimationFrame(render);
