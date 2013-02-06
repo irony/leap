@@ -14,7 +14,6 @@ script
 
   var geometry = new THREE.CubeGeometry(1, 1 ,1);
   var material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  var handModel = new THREE.Mesh(geometry, material);
 
   var hands = [];
 
@@ -53,25 +52,33 @@ script
     ws.onmessage = function(event) {
       var obj = JSON.parse(event.data);
       var str = JSON.stringify(obj, undefined, 2);
-      
-      if (hands.length !== obj.hands.length)
-      {
-        scene.add(hand2);
-      }
+      count = 0;
+      obj.hands.map(function(hand){
+        count++;
 
-      var hand = obj && obj.hands && obj.hands.length && obj.hands.pop();
+        var handModel = hands.length < count ? null : hands[count];
+        if (!handModel){
+          handModel = new THREE.Mesh(geometry, material);
+          scene.add(handModel);
+          hands.push(handModel);
+        }
 
+        handModel.rotation.x = hand.direction[0];
+        handModel.rotation.y = hand.direction[1];
+        handModel.rotation.z = hand.direction[2];
+        handModel.position.x = hand.palmPosition[0] / 200;
+        handModel.position.y = hand.palmPosition[1] / 200;
+        handModel.position.z = hand.palmPosition[2] / 200;
+      });
 
       document.getElementById("output").innerHTML = '<pre>' + hand.palmPosition[1] + '</pre>';
-      cube.rotation.x = hand.direction[0];
-      cube.rotation.y = hand.direction[1];
-      cube.rotation.z = hand.direction[2];
-      cube.position.x = hand.palmPosition[0] / 200;
-      cube.position.y = hand.palmPosition[1] / 200;
-      cube.position.z = hand.palmPosition[2] / 200;
+      
       
     };
     
+    hands = hands.splice(0, obj.hands.length);
+
+
     // On socket close
     ws.onclose = function(event) {
       ws = null;
